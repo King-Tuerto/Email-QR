@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Our Mailing List</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 30px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        .form-section {
+            padding: 40px 30px;
+        }
+
+        .email-form {
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #28a745;
+            display: none;
+        }
+
+        .admin-section {
+            border-top: 2px solid #f0f0f0;
+            padding: 30px;
+            background: #f8f9fa;
+        }
+
+        .admin-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .email-list {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 15px;
+            min-height: 120px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            margin-bottom: 15px;
+            color: #666;
+            resize: vertical;
+        }
+
+        .admin-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .admin-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .admin-btn:hover {
+            background: #218838;
+        }
+
+        .admin-btn.secondary {
+            background: #6c757d;
+        }
+
+        .admin-btn.secondary:hover {
+            background: #545b62;
+        }
+
+        .stats {
+            margin-top: 15px;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Stay Connected!</h1>
+            <p>Join our mailing list to receive updates, news, and special offers</p>
+        </div>
+        
+        <div class="form-section">
+            <div class="success-message" id="successMessage">
+                Thank you! Your email has been added to our list.
+            </div>
+            
+            <form class="email-form" id="emailForm">
+                <div class="input-group">
+                    <label for="name">Name (Optional)</label>
+                    <input type="text" id="name" name="name" placeholder="Enter your name">
+                </div>
+                <div class="input-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+                </div>
+                <button type="submit" class="submit-btn">Join Mailing List</button>
+            </form>
+        </div>
+
+        <div class="admin-section">
+            <h3>📧 Admin Panel - Collected Emails</h3>
+            <textarea class="email-list" id="emailList" placeholder="Collected emails will appear here...
+Ready to copy and paste into Outlook or any email client."></textarea>
+            <div class="admin-buttons">
+                <button class="admin-btn" onclick="copyEmails()">Copy All Emails</button>
+                <button class="admin-btn secondary" onclick="clearEmails()">Clear List</button>
+                <button class="admin-btn secondary" onclick="downloadCSV()">Download CSV</button>
+            </div>
+            <div class="stats" id="stats">Total emails collected: 0</div>
+        </div>
+    </div>
+
+    <script>
+        let emailData = [];
+
+        // Load existing emails from memory when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDisplay();
+        });
+
+        document.getElementById('emailForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            
+            if (email) {
+                // Check for duplicates
+                const exists = emailData.some(entry => entry.email.toLowerCase() === email.toLowerCase());
+                
+                if (!exists) {
+                    emailData.push({
+                        name: name || '',
+                        email: email,
+                        timestamp: new Date().toLocaleString()
+                    });
+                    
+                    // Show success message
+                    const successMsg = document.getElementById('successMessage');
+                    successMsg.style.display = 'block';
+                    
+                    // Clear form
+                    document.getElementById('emailForm').reset();
+                    
+                    // Update display
+                    updateDisplay();
+                    
+                    // Hide success message after 3 seconds
+                    setTimeout(() => {
+                        successMsg.style.display = 'none';
+                    }, 3000);
+                } else {
+                    alert('This email address is already in the list!');
+                }
+            }
+        });
+
+        function updateDisplay() {
+            const emailListTextarea = document.getElementById('emailList');
+            const stats = document.getElementById('stats');
+            
+            if (emailData.length === 0) {
+                emailListTextarea.value = 'Collected emails will appear here...\nReady to copy and paste into Outlook or any email client.';
+            } else {
+                // Format for easy copying - just email addresses separated by semicolons (Outlook format)
+                const emailList = emailData.map(entry => entry.email).join('; ');
+                const detailedList = emailData.map(entry => {
+                    const nameStr = entry.name ? `${entry.name} - ` : '';
+                    return `${nameStr}${entry.email} (${entry.timestamp})`;
+                }).join('\n');
+                
+                emailListTextarea.value = `OUTLOOK FORMAT (copy this line):\n${emailList}\n\nDETAILED LIST:\n${detailedList}`;
+            }
+            
+            stats.textContent = `Total emails collected: ${emailData.length}`;
+        }
+
+        function copyEmails() {
+            const emailList = emailData.map(entry => entry.email).join('; ');
+            if (emailList) {
+                navigator.clipboard.writeText(emailList).then(() => {
+                    const btn = event.target;
+                    const originalText = btn.textContent;
+                    btn.textContent = 'Copied!';
+                    btn.style.background = '#28a745';
+                    setTimeout(() => {
+                        btn.textContent = originalText;
+                        btn.style.background = '#28a745';
+                    }, 2000);
+                }).catch(() => {
+                    // Fallback for older browsers
+                    const textarea = document.getElementById('emailList');
+                    textarea.select();
+                    document.execCommand('copy');
+                    alert('Emails copied to clipboard!');
+                });
+            } else {
+                alert('No emails to copy yet!');
+            }
+        }
+
+        function clearEmails() {
+            if (confirm('Are you sure you want to clear all collected emails?')) {
+                emailData = [];
+                updateDisplay();
+            }
+        }
+
+        function downloadCSV() {
+            if (emailData.length === 0) {
+                alert('No emails to download!');
+                return;
+            }
+            
+            let csvContent = 'Name,Email,Timestamp\n';
+            emailData.forEach(entry => {
+                csvContent += `"${entry.name}","${entry.email}","${entry.timestamp}"\n`;
+            });
+            
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'collected_emails.csv';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
