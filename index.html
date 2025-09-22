@@ -123,6 +123,11 @@
             border-top: 2px solid #f0f0f0;
             padding: 30px;
             background: #f8f9fa;
+            display: none; /* Hidden by default */
+        }
+
+        .admin-section.active {
+            display: block; /* Show when passcode is correct */
         }
 
         .admin-section h3 {
@@ -179,6 +184,43 @@
             color: #666;
             font-size: 14px;
         }
+
+        .passcode-section {
+            padding: 20px 30px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .passcode-section input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .passcode-section button {
+            width: 100%;
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .passcode-section button:hover {
+            background: #218838;
+        }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 14px;
+            margin-top: 10px;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -206,7 +248,13 @@
             </form>
         </div>
 
-        <div class="admin-section">
+        <div class="passcode-section">
+            <input type="password" id="passcode" placeholder="Enter 4-digit passcode" maxlength="4">
+            <button onclick="checkPasscode()">Access Admin Panel</button>
+            <div class="error-message" id="errorMessage">Incorrect passcode. Please try again.</div>
+        </div>
+
+        <div class="admin-section" id="adminSection">
             <h3>📧 Admin Panel - Collected Emails</h3>
             <textarea class="email-list" id="emailList" placeholder="Collected emails will appear here...
 Ready to copy and paste into Outlook or any email client."></textarea>
@@ -221,6 +269,7 @@ Ready to copy and paste into Outlook or any email client."></textarea>
 
     <script>
         let emailData = [];
+        const PASSCODE = '3912'; // Change this to your desired 4-digit passcode
 
         // Load existing emails from memory when page loads
         document.addEventListener('DOMContentLoaded', function() {
@@ -263,6 +312,23 @@ Ready to copy and paste into Outlook or any email client."></textarea>
                 }
             }
         });
+
+        function checkPasscode() {
+            const passcodeInput = document.getElementById('passcode').value;
+            const errorMessage = document.getElementById('errorMessage');
+            const adminSection = document.getElementById('adminSection');
+            
+            if (passcodeInput === PASSCODE) {
+                adminSection.classList.add('active');
+                errorMessage.style.display = 'none';
+                document.getElementById('passcode').value = ''; // Clear passcode input
+            } else {
+                errorMessage.style.display = 'block';
+                setTimeout(() => {
+                    errorMessage.style.display = 'none';
+                }, 3000);
+            }
+        }
 
         function updateDisplay() {
             const emailListTextarea = document.getElementById('emailList');
@@ -336,4 +402,5 @@ Ready to copy and paste into Outlook or any email client."></textarea>
         }
     </script>
 </body>
+</html>
 </html>
